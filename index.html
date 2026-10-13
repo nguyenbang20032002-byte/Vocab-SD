@@ -22,129 +22,152 @@ const $=x=>document.getElementById(x),key='vocabNest.v1';let words=[],stats={cor
   {title:'Đánh giá rủi ro trước khi bảo trì',names:['Thảo (HSE)','James (Maintenance Lead)'],d:['James, have you completed the risk assessment for the repair?','I’ve listed the hazards, but I need to confirm the isolation points.','Verify the energy sources and apply the lockout procedure.','We’ll test that the equipment is isolated before starting.','Who will supervise the job and close the permit?','I will assign the responsible person and review the controls with the crew.'],p:'Thảo reviews a maintenance task with James. They identify hazards, assess who could be harmed and decide which controls are needed. The team verifies all energy sources, follows the lockout procedure and tests that the equipment is isolated. They also confirm supervision, permit responsibilities and the process for safely returning equipment to service.'}
  ];
  const sc=scenarios[(lessonNo-1)%scenarios.length];
+
+ const dialogueScripts=[
+  [
+   'Linh (HSE)','Minh (Công nhân)',
+   'Minh, before we start, can we check the work area together?',
+   'Sure. I can see a 〔N〕 near the machine. Should I go closer?',
+   'No, keep your distance for now. First, tell me what you noticed.',
+   'The cable looks damaged, and someone could trip over it.',
+   'Good spot. That is a 〔N〕, so we need to keep people away.',
+   'I’ll let the supervisor know and mark off the area.',
+   'Thanks. Have you checked your 〔N〕 before starting the job?',
+   'Yes, but I’ll check it again and replace anything damaged.',
+   'Great. Make sure you wear it properly throughout the task.',
+   'Do I need to read the work 〔N〕 again? I’m not sure about one step.',
+   'Yes, let’s review it together. Never guess when a step is unclear.',
+   'Understood. I’ll ask before doing anything I’m unsure about.',
+   'And if you see another unsafe condition, what will you do?',
+   'I’ll stop the job if needed and report it to you or my supervisor.',
+   'Exactly. We want everyone to go home safe, not take shortcuts.',
+   'I’ll remind the team during the toolbox talk as well.',
+   'Good idea. We should also confirm everyone has completed the required 〔N〕.',
+   'I’ll check with the team leader and let you know if anyone needs help.',
+   'Perfect. Once the area is safe and the checks are complete, we can start.'
+  ],
+  [
+   'An (HSE)','David (Giám sát)',
+   'David, I heard there was an incident near the loading bay. What happened?',
+   'A pallet nearly fell when the forklift turned. Luckily, nobody was hurt.',
+   'That sounds like a 〔N〕. Have you stopped the activity and secured the area?',
+   'Yes. We stopped the forklift and kept workers away from the spot.',
+   'Good. Please record the 〔N〕 while the details are still fresh.',
+   'I’ve noted the time, location and who was working nearby.',
+   'Did anyone see exactly what happened?',
+   'Two workers did. I’ll ask them separately so we get a clear account.',
+   'Thanks. We need to find the 〔N〕, not just blame the operator.',
+   'Agreed. The load may not have been secured properly, but we need to check.',
+   'Let’s review the procedure and the condition of the equipment.',
+   'I’ll check the inspection records and speak with the forklift operator.',
+   'Once we know the cause, we can decide on a suitable 〔N〕.',
+   'We may need to refresh the training and improve the loading area.',
+   'That could help. Who will take responsibility for each action?',
+   'I’ll assign an owner and a due date, then track the progress.',
+   'Please keep the evidence and update the incident 〔N〕.',
+   'Of course. I’ll send you the report before the end of the shift.',
+   'Great. We’ll verify the actions are effective and share the lesson with the team.'
+  ],
+  [
+   'Mai (HSE Manager)','Mr. Brown (Plant Manager)',
+   'Mr. Brown, do you have a few minutes to discuss the machine guarding issue?',
+   'Of course, Mai. What did your inspection find?',
+   'The assessment found a 〔N〕 near the moving parts, and operators could reach them.',
+   'Has anything happened, or is this a potential problem?',
+   'No injury has been reported, but the 〔N〕 could be serious if someone gets caught.',
+   'What do you recommend, and how much downtime will it take?',
+   'A fixed guard with an interlock would be more reliable than a warning sign alone.',
+   'Can we install it without stopping the whole production line?',
+   'We can schedule the work during the planned maintenance window.',
+   'What about the cost? I need a clear reason to approve the budget.',
+   'I’ll compare the cost with the potential injury, damage and production loss.',
+   'Will the operators need any additional 〔N〕?',
+   'Yes. We’ll explain the new guard, the safe procedure and what to do if it fails.',
+   'How will we know the new control is working properly?',
+   'HSE and maintenance will inspect and test it before the machine restarts.',
+   'All right. Please prepare the proposal and include the schedule.',
+   'I’ll also include the responsible people and how we’ll check completion.',
+   'That sounds reasonable. Bring it to the review meeting tomorrow.',
+   'Thanks. I’ll send you the proposal today so we can agree on the next step.'
+  ],
+  [
+   'Trang (HSE Officer)','Inspector Lee (Thanh tra)',
+   'Good morning, Inspector Lee. What would you like to look at first?',
+   'Please show me the latest 〔N〕 for this work area.',
+   'Certainly. I’ll open the current version and show you the review date.',
+   'How do you make sure workers understand the main risks?',
+   'We discuss them before the job and record the safety 〔N〕.',
+   'Can I see the inspection records and the actions that are still open?',
+   'Of course. Each finding has a responsible person and a due date.',
+   'I noticed this action is overdue. Why hasn’t it been closed?',
+   'I’ll check with the area supervisor rather than give you an unverified answer.',
+   'That’s fine. Please show me the evidence when you have confirmed it.',
+   'I’ll provide the photo, the inspection result and the sign-off if available.',
+   'What do you do when a worker reports a 〔N〕?',
+   'We make the area safe, record the report and assess what action is needed.',
+   'I’d like to inspect the chemical storage area next.',
+   'No problem. I’ll contact the area owner and check the access requirements.',
+   'Please make sure the relevant documents are available there too.',
+   'Understood. I’ll bring the safety data sheets and the storage inspection log.',
+   'Thank you. If something is missing, just tell me; don’t guess.',
+   'Agreed. I’ll verify any details I’m unsure about and follow up with you.'
+  ],
+  [
+   'Huy (Tổ trưởng)','Sarah (HSE)',
+   'Sarah, there’s a spill beside the mixing station. What should we do first?',
+   'Keep everyone away and don’t touch the liquid until we know what it is.',
+   'I can see the label. Should I bring the usual cleaning materials?',
+   'Not yet. Check the 〔N〕 first so we know the hazards and response steps.',
+   'I’ll ask the team to stay back and block access to the area.',
+   'Good. We also need the right 〔N〕 before anyone handles the spill.',
+   'The spill kit is in the cabinet, but I’m not trained to clean this up.',
+   'Then don’t do it yourself. Only trained responders should handle it.',
+   'I’ll call the emergency response team and inform the supervisor.',
+   'Please tell them what was spilled, where it happened and whether anyone was exposed.',
+   'No one seems injured, but I’ll check with the workers nearby.',
+   'Good. If anyone feels unwell, get medical help and follow the site procedure.',
+   'Should we restart the mixing station once the liquid is removed?',
+   'Not until the area has been cleaned, checked and declared safe.',
+   'Who will record the incident and the action we took?',
+   'I’ll complete the report and arrange a review so we can prevent a repeat.',
+   'We may need to check how the container was stored.',
+   'Exactly. Let’s confirm the cause and improve the controls before restarting.',
+   'Understood. I’ll keep people clear until the response team gives the all-clear.'
+  ]
+ ];
+ const script=dialogueScripts[(lessonNo-1)%dialogueScripts.length];
  const escapeReg=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  const makeSentence=(w,i,kind)=>{
-  let ex=(w.example||'').trim();
-  if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) return ex.replace(new RegExp(escapeReg(w.en),'i'),`〔${i+1}〕`);
+  const marker=`〔${i+1}〕`;
+  const ex=(w.example||'').trim();
+  if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) return ex.replace(new RegExp(escapeReg(w.en),'i'),marker);
   const frames=kind==='dialogue' ? [
-   `Could you explain the procedure for 〔${i+1}〕 before we start?`,
-   `We identified 〔${i+1}〕 during the site inspection.`,
-   `Please record 〔${i+1}〕 and assign a responsible person.`,
-   `Have you checked 〔${i+1}〕 with the area supervisor?`,
-   `We need to review 〔${i+1}〕 before the job begins.`
+   `Before we continue, can you explain how 〔${i+1}〕 affects this job?`,
+   `I noticed 〔${i+1}〕 during the check. What should we do next?`,
+   `Let’s confirm 〔${i+1}〕 with the supervisor before we restart.`,
+   `We should record 〔${i+1}〕 and agree on who will follow it up.`
   ] : [
-   `The HSE team reviewed 〔${i+1}〕 as part of the workplace assessment.`,
-   `The supervisor recorded 〔${i+1}〕 and discussed it with the workers.`,
-   `Before work started, the team checked 〔${i+1}〕 and confirmed the controls.`,
-   `During the inspection, 〔${i+1}〕 was discussed and follow-up was agreed.`,
-   `The team documented 〔${i+1}〕 so the action could be verified later.`
+   `Before the shift, the team met to review 〔${i+1}〕 and the planned task.`,
+   `During the walk-through, they discussed 〔${i+1}〕 and agreed on the next step.`,
+   `The supervisor checked 〔${i+1}〕 with the workers before work continued.`,
+   `At the end of the review, the team recorded 〔${i+1}〕 for follow-up.`
   ];
   return frames[(i+lessonNo)%frames.length];
  };
- const rows=list.map((w,i)=>({w,i,line:makeSentence(w,i,st.kind)}));
+ const rows=list.map((w,i)=>({w,i,line:makeSentence(w,i,'passage')}));
  const renderLine=({w,i,line})=>{
   const marker=`〔${i+1}〕`;
   const shown=st.checked[i]?`<strong style="color:#e53935;font-weight:850">${esc(w.en)}</strong>`:`<span style="display:inline-block;min-width:58px;border-bottom:1.5px solid #173f70;color:#173f70;font-weight:700">${marker}</span>`;
   return esc(line).replace(esc(marker),shown);
  };
- const dialogueScripts=[
-  [
-   'Linh (HSE)','Minh (Công nhân)',
-   'Minh, before we start, what should we check in this work area?',
-   'I should look for 〔N〕 first, especially around the machine and walkway.',
-   'Exactly. Did you notice anything unusual during your walk-through?',
-   'Yes, I saw 〔N〕 near the equipment. I have not touched it.',
-   'Good call. Keep away from it and tell me what you found.',
-   'I will. Should I also check the 〔N〕 before starting the task?',
-   'Yes, make sure it is suitable and in good condition.',
-   'Understood. I will wear 〔N〕 and ask the team to do the same.',
-   'Thanks. Have you read the work 〔N〕 for this job?',
-   'I read it yesterday, but I want to confirm one step about 〔N〕.',
-   'Let’s go through it together. If anything is unclear, ask before you begin.',
-   'That helps. Who should I contact if I spot another 〔N〕?',
-   'Tell your supervisor and the HSE team, and make sure it is recorded.',
-   'Should I continue working while the issue is being checked?',
-   'No. Stop the task if there is an immediate danger, and wait for confirmation.',
-   'I will explain that to the others during our 〔N〕.',
-   'Good idea. Please make sure everyone understands the control measures.',
-   'After the check, should we review the area again?',
-   'Yes. We will confirm the controls are effective before work resumes.'
-  ],
-  [
-   'An (HSE)','David (Giám sát)',
-   'David, I heard there was an incident near the loading bay. What happened?',
-   'A worker reported 〔N〕, but luckily nobody was hurt.',
-   'Thanks for reporting it. Have you made the area safe?',
-   'Yes, we stopped the task and put 〔N〕 around the affected area.',
-   'Good. Let’s record what we know before we draw any conclusions.',
-   'I have the time, location and names of the people who saw 〔N〕.',
-   'Please speak to the witnesses separately and keep the facts clear.',
-   'I will. Should we check whether 〔N〕 contributed to the event?',
-   'Yes, look at the work conditions, equipment and procedure.',
-   'I will also review the previous 〔N〕 for this activity.',
-   'That may help us understand whether the controls were adequate.',
-   'Once we know the cause, we can agree on a 〔N〕.',
-   'Exactly. Give each action an owner and a realistic deadline.',
-   'Who will confirm that the action has been completed?',
-   'The responsible supervisor should provide evidence and let HSE verify it.',
-   'Should we share the lesson with the rest of the team?',
-   'Yes, discuss it at the toolbox talk so the same event does not happen again.',
-   'I will follow up next week and check whether the changes are working.',
-   'Perfect. Please keep the report and follow-up records together.'
-  ],
-  [
-   'Mai (HSE Manager)','Mr. Brown (Plant Manager)',
-   'Mr. Brown, could we discuss the safety issue on the production line?',
-   'Of course, Mai. What is the main concern?',
-   'Our assessment found 〔N〕 around the machine, and the current controls are not enough.',
-   'How serious is the risk, and who could be affected by it?',
-   'Operators could be injured. The assessment also identified 〔N〕 during normal operation.',
-   'What do you recommend we do first?',
-   'I recommend a physical guard and an interlock, rather than relying only on warnings.',
-   'Do we have a clear 〔N〕 and an estimate for the work?',
-   'Yes. I can prepare the options, cost and installation schedule.',
-   'Production is busy this month. How can we minimise disruption?',
-   'We can plan the installation during the maintenance window and use temporary controls until then.',
-   'How will we know the new control is effective?',
-   'We will inspect it, test the function and update the 〔N〕 after installation.',
-   'Please include the training needed for operators.',
-   'Absolutely. We will brief the team and record the 〔N〕 before the machine returns to service.',
-   'All right. Put the proposal and expected benefits in writing.',
-   'I will include the risk reduction, cost comparison and implementation plan.',
-   'Good. Bring it to the review meeting and we can agree on the next step.'
-  ],
-  [
-   'Trang (HSE Officer)','Inspector Lee (Thanh tra)',
-   'Good morning, Inspector Lee. What would you like to review first?',
-   'Please show me the latest 〔N〕 and explain when it was last reviewed.',
-   'Certainly. I will also bring the supporting records.',
-   'How do you make sure workers understand the main 〔N〕 in their area?',
-   'We brief them before the job and keep attendance records.',
-   'Can I see the records for the recent 〔N〕?',
-   'Of course. I will open the register and confirm the dates.',
-   'I noticed one item on this checklist is still open. Who owns it?',
-   'The area supervisor is responsible, and the due date is recorded here.',
-   'What evidence will show that the 〔N〕 has been completed?',
-   'We will provide the photo, inspection result and sign-off.',
-   'I would also like to visit the chemical storage area.',
-   'No problem. We will contact the area owner and check the required 〔N〕 before entering.',
-   'If I identify another issue, how will it be followed up?',
-   'We will record the finding, assign an owner and track the corrective action.',
-   'Please do not guess if you are unsure about a record.',
-   'Understood. I will verify the information and get back to you.',
-   'Thank you. Let us continue the inspection together.',
-   'Thank you. I will note any actions and confirm the next steps with you.'
-  ]
- ];
- const script=dialogueScripts[(lessonNo-1)%dialogueScripts.length];
  const dialogueLines=list.map((w,i)=>{
-   const raw=script[2+i]||`Let’s make sure we understand the next step and keep the team safe.`;
+   const raw=script[2+i]||'Let’s agree on the next step and make sure the work can continue safely.';
    const marker=`〔${i+1}〕`;
    let line=raw.replace('〔N〕',marker);
    if(!raw.includes('〔N〕')){
      const ex=(w.example||'').trim();
      if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) line += ' ' + ex.replace(new RegExp(escapeReg(w.en),'i'),marker);
-     else line += ` The key point is 〔${i+1}〕, so let’s check it before we continue.`;
+     else line += ` Before we continue, let’s check 〔${i+1}〕 together.`;
    }
    return {w,i,line,name:script[i%2]};
  });
@@ -153,7 +176,7 @@ const $=x=>document.getElementById(x),key='vocabNest.v1';let words=[],stats={cor
  p.innerHTML=`<div class="between"><div><h2>Điền từ</h2><p class="sub">Bài ${activeLesson==='all'?'tất cả':activeLesson} · ${esc(sc.title)} · Điền từ còn thiếu rồi tự dịch nội dung.</p></div><span class="pill">${list.length} từ</span></div>
  <div class="actions" style="margin:14px 0;flex-wrap:wrap"><button type="button" class="btn ${st.kind==='dialogue'?'':'ghost'}" id="fillDialogue">💬 Điền từ trong hội thoại</button><button type="button" class="btn ${st.kind==='passage'?'':'ghost'}" id="fillPassage">📖 Điền từ trong đoạn văn</button><button type="button" class="btn ghost" id="fillReset">Làm lại bài</button></div>
  <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(230px,.8fr);gap:18px;align-items:start" class="fill-layout">
-  <section style="background:#fff;border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 12px;color:var(--t)">${st.kind==='dialogue'?'Hội thoại · '+esc(sc.title):'Đoạn văn · '+esc(sc.title)}</h3><div style="line-height:2.05;white-space:normal">${st.kind==='passage'?`<p style="margin-top:0">${esc(sc.p)}</p>`:''}${lines.map(({w,i,line,name})=>`<div style="margin:0 0 8px">${st.kind==='dialogue'?`<b style="color:var(--t)">${esc(name||sc.names[i%2])}:</b> `:''}${renderLine({w,i,line})}</div>`).join('')}</div></section>
+  <section style="background:#fff;border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 12px;color:var(--t)">${st.kind==='dialogue'?'Hội thoại · '+esc(sc.title):'Đoạn văn · '+esc(sc.title)}</h3><div style="line-height:2.05;white-space:normal">${st.kind==='passage'?`<p style="margin-top:0">${lines.map(({w,i,line})=>renderLine({w,i,line})).join(' ')}</p>`:''}${st.kind==='dialogue'?lines.map(({w,i,line,name})=>`<div style="margin:0 0 8px"><b style="color:var(--t)">${esc(name||sc.names[i%2])}:</b> ${renderLine({w,i,line})}</div>`).join(''):''}</div></section>
   <section style="border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 10px;color:var(--t)">Điền đáp án</h3><p class="sub">Nhập từ tiếng Anh rồi nhấn Enter để kiểm tra. Đúng sẽ hiện in đậm màu đỏ trong nội dung bên trái.</p><div style="display:flex;flex-direction:column;gap:9px">${rows.map(({w,i})=>`<div><label style="display:block;font-weight:750;font-size:13px;margin-bottom:4px">${i+1}.</label><input data-fill="${i}" value="${esc(st.answers[i]||'')}" autocomplete="off" placeholder="Nhập từ..." style="width:100%;border:1px solid #cddadb;border-radius:8px;padding:9px;font:inherit;${st.checked[i]?'background:#f0f8f4;color:#6b7b7b;':''}" ${st.checked[i]?'disabled':''}><div id="fillfb${i}" class="feedback" style="font-size:12px;min-height:18px;margin-top:2px;color:${st.checked[i]?'#16804a':'#c62828'}">${st.checked[i]?'Chính xác!':st.feedback[i]||''}</div></div>`).join('')}</div><div class="pill" style="margin-top:12px;display:inline-block">Đúng ${Object.keys(st.checked).length} / ${list.length}</div><button type="button" class="btn ghost" id="checkAllFill" style="margin-top:12px;width:100%">Kiểm tra tất cả</button></section>
  </div><div class="field" style="margin-top:18px"><label>Dịch ${st.kind==='dialogue'?'hội thoại':'đoạn văn'} sang tiếng Việt</label><textarea id="fillTranslation" rows="4" placeholder="Tự dịch nội dung ở đây...">${esc(st.translated)}</textarea></div>`;
  $('fillDialogue').onclick=()=>{st.kind='dialogue';renderStudy()};$('fillPassage').onclick=()=>{st.kind='passage';renderStudy()};
