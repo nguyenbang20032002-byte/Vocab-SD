@@ -23,160 +23,104 @@ const $=x=>document.getElementById(x),key='vocabNest.v1';let words=[],stats={cor
  ];
  const sc=scenarios[(lessonNo-1)%scenarios.length];
 
- const dialogueScripts=[
-  [
-   'Linh (HSE)','Minh (Công nhân)',
-   'Minh, before we start, can we check the work area together?',
-   'Sure. I can see a 〔N〕 near the machine. Should I go closer?',
-   'No, keep your distance for now. First, tell me what you noticed.',
-   'The cable looks damaged, and someone could trip over it.',
-   'Good spot. That is a 〔N〕, so we need to keep people away.',
-   'I’ll let the supervisor know and mark off the area.',
-   'Thanks. Have you checked your 〔N〕 before starting the job?',
-   'Yes, but I’ll check it again and replace anything damaged.',
-   'Great. Make sure you wear it properly throughout the task.',
-   'Do I need to read the work 〔N〕 again? I’m not sure about one step.',
-   'Yes, let’s review it together. Never guess when a step is unclear.',
-   'Understood. I’ll ask before doing anything I’m unsure about.',
-   'And if you see another unsafe condition, what will you do?',
-   'I’ll stop the job if needed and report it to you or my supervisor.',
-   'Exactly. We want everyone to go home safe, not take shortcuts.',
-   'I’ll remind the team during the toolbox talk as well.',
-   'Good idea. We should also confirm everyone has completed the required 〔N〕.',
-   'I’ll check with the team leader and let you know if anyone needs help.',
-   'Perfect. Once the area is safe and the checks are complete, we can start.'
-  ],
-  [
-   'An (HSE)','David (Giám sát)',
-   'David, I heard there was an incident near the loading bay. What happened?',
-   'A pallet nearly fell when the forklift turned. Luckily, nobody was hurt.',
-   'That sounds like a 〔N〕. Have you stopped the activity and secured the area?',
-   'Yes. We stopped the forklift and kept workers away from the spot.',
-   'Good. Please record the 〔N〕 while the details are still fresh.',
-   'I’ve noted the time, location and who was working nearby.',
-   'Did anyone see exactly what happened?',
-   'Two workers did. I’ll ask them separately so we get a clear account.',
-   'Thanks. We need to find the 〔N〕, not just blame the operator.',
-   'Agreed. The load may not have been secured properly, but we need to check.',
-   'Let’s review the procedure and the condition of the equipment.',
-   'I’ll check the inspection records and speak with the forklift operator.',
-   'Once we know the cause, we can decide on a suitable 〔N〕.',
-   'We may need to refresh the training and improve the loading area.',
-   'That could help. Who will take responsibility for each action?',
-   'I’ll assign an owner and a due date, then track the progress.',
-   'Please keep the evidence and update the incident 〔N〕.',
-   'Of course. I’ll send you the report before the end of the shift.',
-   'Great. We’ll verify the actions are effective and share the lesson with the team.'
-  ],
-  [
-   'Mai (HSE Manager)','Mr. Brown (Plant Manager)',
-   'Mr. Brown, do you have a few minutes to discuss the machine guarding issue?',
-   'Of course, Mai. What did your inspection find?',
-   'The assessment found a 〔N〕 near the moving parts, and operators could reach them.',
-   'Has anything happened, or is this a potential problem?',
-   'No injury has been reported, but the 〔N〕 could be serious if someone gets caught.',
-   'What do you recommend, and how much downtime will it take?',
-   'A fixed guard with an interlock would be more reliable than a warning sign alone.',
-   'Can we install it without stopping the whole production line?',
-   'We can schedule the work during the planned maintenance window.',
-   'What about the cost? I need a clear reason to approve the budget.',
-   'I’ll compare the cost with the potential injury, damage and production loss.',
-   'Will the operators need any additional 〔N〕?',
-   'Yes. We’ll explain the new guard, the safe procedure and what to do if it fails.',
-   'How will we know the new control is working properly?',
-   'HSE and maintenance will inspect and test it before the machine restarts.',
-   'All right. Please prepare the proposal and include the schedule.',
-   'I’ll also include the responsible people and how we’ll check completion.',
-   'That sounds reasonable. Bring it to the review meeting tomorrow.',
-   'Thanks. I’ll send you the proposal today so we can agree on the next step.'
-  ],
-  [
-   'Trang (HSE Officer)','Inspector Lee (Thanh tra)',
-   'Good morning, Inspector Lee. What would you like to look at first?',
-   'Please show me the latest 〔N〕 for this work area.',
-   'Certainly. I’ll open the current version and show you the review date.',
-   'How do you make sure workers understand the main risks?',
-   'We discuss them before the job and record the safety 〔N〕.',
-   'Can I see the inspection records and the actions that are still open?',
-   'Of course. Each finding has a responsible person and a due date.',
-   'I noticed this action is overdue. Why hasn’t it been closed?',
-   'I’ll check with the area supervisor rather than give you an unverified answer.',
-   'That’s fine. Please show me the evidence when you have confirmed it.',
-   'I’ll provide the photo, the inspection result and the sign-off if available.',
-   'What do you do when a worker reports a 〔N〕?',
-   'We make the area safe, record the report and assess what action is needed.',
-   'I’d like to inspect the chemical storage area next.',
-   'No problem. I’ll contact the area owner and check the access requirements.',
-   'Please make sure the relevant documents are available there too.',
-   'Understood. I’ll bring the safety data sheets and the storage inspection log.',
-   'Thank you. If something is missing, just tell me; don’t guess.',
-   'Agreed. I’ll verify any details I’m unsure about and follow up with you.'
-  ],
-  [
-   'Huy (Tổ trưởng)','Sarah (HSE)',
-   'Sarah, there’s a spill beside the mixing station. What should we do first?',
-   'Keep everyone away and don’t touch the liquid until we know what it is.',
-   'I can see the label. Should I bring the usual cleaning materials?',
-   'Not yet. Check the 〔N〕 first so we know the hazards and response steps.',
-   'I’ll ask the team to stay back and block access to the area.',
-   'Good. We also need the right 〔N〕 before anyone handles the spill.',
-   'The spill kit is in the cabinet, but I’m not trained to clean this up.',
-   'Then don’t do it yourself. Only trained responders should handle it.',
-   'I’ll call the emergency response team and inform the supervisor.',
-   'Please tell them what was spilled, where it happened and whether anyone was exposed.',
-   'No one seems injured, but I’ll check with the workers nearby.',
-   'Good. If anyone feels unwell, get medical help and follow the site procedure.',
-   'Should we restart the mixing station once the liquid is removed?',
-   'Not until the area has been cleaned, checked and declared safe.',
-   'Who will record the incident and the action we took?',
-   'I’ll complete the report and arrange a review so we can prevent a repeat.',
-   'We may need to check how the container was stored.',
-   'Exactly. Let’s confirm the cause and improve the controls before restarting.',
-   'Understood. I’ll keep people clear until the response team gives the all-clear.'
-  ]
- ];
- const script=dialogueScripts[(lessonNo-1)%dialogueScripts.length];
  const escapeReg=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
- const makeSentence=(w,i,kind)=>{
-  const marker=`〔${i+1}〕`;
-  const ex=(w.example||'').trim();
-  if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) return ex.replace(new RegExp(escapeReg(w.en),'i'),marker);
-  const frames=kind==='dialogue' ? [
-   `Before we continue, can you explain how 〔${i+1}〕 affects this job?`,
-   `I noticed 〔${i+1}〕 during the check. What should we do next?`,
-   `Let’s confirm 〔${i+1}〕 with the supervisor before we restart.`,
-   `We should record 〔${i+1}〕 and agree on who will follow it up.`
-  ] : [
-   `Before the shift, the team met to review 〔${i+1}〕 and the planned task.`,
-   `During the walk-through, they discussed 〔${i+1}〕 and agreed on the next step.`,
-   `The supervisor checked 〔${i+1}〕 with the workers before work continued.`,
-   `At the end of the review, the team recorded 〔${i+1}〕 for follow-up.`
-  ];
-  return frames[(i+lessonNo)%frames.length];
+ const norm=s=>String(s||'').toLowerCase();
+ const keyword=(w,terms)=>terms.some(t=>norm(w.en+' '+w.vi+' '+w.topic).includes(t));
+ const category=w=>{
+  const x=norm(w.en+' '+w.vi+' '+w.topic);
+  if(/helmet|glove|goggle|boot|shoe|mask|respirator|ppe|protective equipment|harness|earplug/.test(x))return 'ppe';
+  if(/report|record|document|investigat|evidence|witness|root cause|corrective action|incident|accident|near miss/.test(x))return 'report';
+  if(/hazard|risk|danger|unsafe|injur|harm|threat/.test(x))return 'risk';
+  if(/train|brief|toolbox|competenc|instruction|procedure|permit/.test(x))return 'procedure';
+  if(/chemical|spill|substance|label|safety data|toxic|flammable/.test(x))return 'chemical';
+  if(/emergency|evacuat|alarm|fire|first aid|rescue|assembly point/.test(x))return 'emergency';
+  if(/inspect|check|audit|assessment|assess|monitor|review/.test(x))return 'inspection';
+  if(/machine|equipment|guard|maintenance|isolation|lockout|repair|tool/.test(x))return 'equipment';
+  return 'general';
  };
- const rows=list.map((w,i)=>({w,i,line:makeSentence(w,i,'passage')}));
+ // A target word is assigned to a conversational turn by meaning, not by CSV order.
+ const priorities={
+  'Nhắc nhở công nhân trước ca làm':['risk','ppe','inspection','procedure','report','equipment','general'],
+  'Báo cáo near miss và điều tra sự cố':['risk','report','inspection','equipment','procedure','general'],
+  'Thuyết phục quản lý đầu tư an toàn':['risk','equipment','inspection','report','procedure','general'],
+  'Tiếp đón đoàn thanh tra':['inspection','report','procedure','risk','general'],
+  'Kiểm soát hóa chất và tràn đổ':['chemical','ppe','emergency','report','risk','general'],
+  'Cấp phép công việc nóng':['procedure','risk','equipment','ppe','emergency','general'],
+  'Làm việc trên cao':['ppe','risk','inspection','equipment','procedure','general'],
+  'Họp an toàn với nhà thầu':['procedure','risk','inspection','report','equipment','general'],
+  'Ứng phó tình huống khẩn cấp':['emergency','report','procedure','risk','general'],
+  'Đánh giá rủi ro trước khi bảo trì':['equipment','risk','inspection','procedure','report','general']
+ };
+ const dialogueFrames={
+  risk:[['Linh (HSE)','Before we start, what is the main 〔N〕 you can see here?'],['Minh (Công nhân)','I’ve spotted one near the work area. I’ll keep clear and show you exactly where it is.']],
+  ppe:[['Linh (HSE)','Have you got the right 〔N〕 for this task?'],['Minh (Công nhân)','Yes. I’ll check that it fits properly and replace it if it’s damaged.']],
+  report:[['Linh (HSE)','If you notice anything wrong, how will you 〔N〕 it?'],['Minh (Công nhân)','I’ll tell the supervisor straight away and make sure the details are recorded.']],
+  procedure:[['Linh (HSE)','Are you clear about the 〔N〕 we need to follow before starting?'],['Minh (Công nhân)','Mostly, yes. I’ll ask you about the step I’m unsure of rather than guess.']],
+  chemical:[['Linh (HSE)','Before anyone touches it, have we identified the 〔N〕 involved?'],['Minh (Công nhân)','Not yet. I’ll keep everyone back while we check the label and the safety information.']],
+  emergency:[['Linh (HSE)','What should the team do if there’s an 〔N〕?'],['Minh (Công nhân)','Stop the job, follow the site procedure and go to the designated safe place.']],
+  inspection:[['Linh (HSE)','Can you show me the 〔N〕 you completed before the job?'],['Minh (Công nhân)','Sure. I’ll walk you through what I checked and flag anything that still needs action.']],
+  equipment:[['Linh (HSE)','Have you checked the 〔N〕 before using it?'],['Minh (Công nhân)','I’ll inspect it first. If it’s damaged or not working properly, I won’t use it.']],
+  general:[['Linh (HSE)','How does 〔N〕 apply to the job we’re about to do?'],['Minh (Công nhân)','Let’s check the task requirements together so we handle it properly.']]
+ };
+ const dialogueLines=[];
+ const available=[...list];
+ const used=new Set();
+ const order=priorities[sc.title]||['risk','inspection','procedure','report','general'];
+ // Greedily match words to a relevant turn, then use the remaining terms in a natural clarification exchange.
+ for(let i=0;i<list.length;i++){
+  let candidates=available.filter(w=>!used.has(w.id));
+  let best=candidates.find(w=>category(w)===order[i%order.length])||candidates[0];
+  if(!best)break;
+  used.add(best.id);
+  const cat=category(best),pair=dialogueFrames[cat];
+  const marker=`〔${i+1}〕`;
+  const first=pair[0][1].replace('〔N〕',marker), second=pair[1][1];
+  // Alternate a question and a reply, so each turn reacts to the same safety topic.
+  dialogueLines.push({w:best,i,line:first,name:pair[0][0]});
+  if(dialogueLines.length<list.length){
+   const j=dialogueLines.length;
+   dialogueLines.push({w:null,i:j,line:second,name:pair[1][0],response:true});
+  }
+ }
+ // Each vocabulary item has its own blank in the dialogue; responses remain connected to the question immediately before them.
+ const targetAt=dialogueLines.filter(x=>x.w);
+ const rows=list.map((w,i)=>{
+  const cat=category(w),ex=(w.example||'').trim(),marker=`〔${i+1}〕`;
+  let line='';
+  if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) line=ex.replace(new RegExp(escapeReg(w.en),'i'),marker);
+  else {
+   const sentence={
+    risk:`During the walk-through, the team identified ${marker} near the active work area and agreed to keep people clear.`,
+    ppe:`Before the task began, the supervisor checked that each worker had suitable ${marker} and knew how to use it.`,
+    report:`The supervisor asked the team to ${marker} any concern immediately and record what happened.`,
+    procedure:`Before work started, the crew reviewed the ${marker} together and clarified any step they did not understand.`,
+    chemical:`The team checked the label and safety information for ${marker} before deciding how to handle the situation.`,
+    emergency:`During the briefing, the team reviewed the ${marker} arrangements and confirmed where everyone should go.`,
+    inspection:`During the site walk-through, the HSE officer reviewed ${marker} with the supervisor and noted any follow-up action.`,
+    equipment:`Before maintenance began, the team checked ${marker} and agreed not to use it if anything was damaged.`,
+    general:`The supervisor discussed ${marker} with the crew, explained how it applied to the task and checked that everyone understood.`
+   };
+   line=sentence[cat];
+  }
+  const links=['At the start of the shift,','During the first check,','As they walk through the area,','A little later,','They then agree that','Before the job begins,','To make sure everyone understands,','After discussing the concern,','The supervisor also confirms that','Finally,'];
+  line=links[i%links.length]+' '+line.charAt(0).toLowerCase()+line.slice(1);
+  return {w,i,line};
+ });
  const renderLine=({w,i,line})=>{
   const marker=`〔${i+1}〕`;
   const shown=st.checked[i]?`<strong style="color:#e53935;font-weight:850">${esc(w.en)}</strong>`:`<span style="display:inline-block;min-width:58px;border-bottom:1.5px solid #173f70;color:#173f70;font-weight:700">${marker}</span>`;
   return esc(line).replace(esc(marker),shown);
  };
- const dialogueLines=list.map((w,i)=>{
-   const raw=script[2+i]||'Let’s agree on the next step and make sure the work can continue safely.';
-   const marker=`〔${i+1}〕`;
-   let line=raw.replace('〔N〕',marker);
-   if(!raw.includes('〔N〕')){
-     const ex=(w.example||'').trim();
-     if(ex && new RegExp(escapeReg(w.en),'i').test(ex)) line += ' ' + ex.replace(new RegExp(escapeReg(w.en),'i'),marker);
-     else line += ` Before we continue, let’s check 〔${i+1}〕 together.`;
-   }
-   return {w,i,line,name:script[i%2]};
+ // Build a connected conversation around one scenario. Target words are shuffled into turns by semantic category.
+ const convo=dialogueLines.map((item,idx)=>{
+  if(item.w){return {w:item.w,i:list.findIndex(w=>w.id===item.w.id),line:item.line.replace('〔'+(item.i+1)+'〕',`〔${list.findIndex(w=>w.id===item.w.id)+1}〕`),name:idx%2===0?sc.names[0]:sc.names[1]};}
+  return {w:null,i:idx,line:item.line,name:idx%2===0?sc.names[0]:sc.names[1],response:true};
  });
- // Every lesson has its own workplace scenario and a separate passage; target words are embedded as numbered blanks.
- const lines=st.kind==='dialogue'?dialogueLines:rows;
+ const lines=st.kind==='dialogue'?convo:rows;
  p.innerHTML=`<div class="between"><div><h2>Điền từ</h2><p class="sub">Bài ${activeLesson==='all'?'tất cả':activeLesson} · ${esc(sc.title)} · Điền từ còn thiếu rồi tự dịch nội dung.</p></div><span class="pill">${list.length} từ</span></div>
  <div class="actions" style="margin:14px 0;flex-wrap:wrap"><button type="button" class="btn ${st.kind==='dialogue'?'':'ghost'}" id="fillDialogue">💬 Điền từ trong hội thoại</button><button type="button" class="btn ${st.kind==='passage'?'':'ghost'}" id="fillPassage">📖 Điền từ trong đoạn văn</button><button type="button" class="btn ghost" id="fillReset">Làm lại bài</button></div>
  <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(230px,.8fr);gap:18px;align-items:start" class="fill-layout">
-  <section style="background:#fff;border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 12px;color:var(--t)">${st.kind==='dialogue'?'Hội thoại · '+esc(sc.title):'Đoạn văn · '+esc(sc.title)}</h3><div style="line-height:2.05;white-space:normal">${st.kind==='passage'?`<p style="margin-top:0">${lines.map(({w,i,line})=>renderLine({w,i,line})).join(' ')}</p>`:''}${st.kind==='dialogue'?lines.map(({w,i,line,name})=>`<div style="margin:0 0 8px"><b style="color:var(--t)">${esc(name||sc.names[i%2])}:</b> ${renderLine({w,i,line})}</div>`).join(''):''}</div></section>
+  <section style="background:#fff;border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 12px;color:var(--t)">${st.kind==='dialogue'?'Hội thoại · '+esc(sc.title):'Đoạn văn · '+esc(sc.title)}</h3><div style="line-height:2.05;white-space:normal">${st.kind==='passage'?`<p style="margin-top:0">${lines.map(({w,i,line})=>renderLine({w,i,line})).join(' ')}</p>`:''}${st.kind==='dialogue'?lines.map(({w,i,line,name,response})=>`<div style="margin:0 0 8px"><b style="color:var(--t)">${esc(name||sc.names[i%2])}:</b> ${response?esc(line):renderLine({w,i,line})}</div>`).join(''):''}</div></section>
   <section style="border:1px solid var(--l);border-radius:12px;padding:14px;min-width:0"><h3 style="margin:0 0 10px;color:var(--t)">Điền đáp án</h3><p class="sub">Nhập từ tiếng Anh rồi nhấn Enter để kiểm tra. Đúng sẽ hiện in đậm màu đỏ trong nội dung bên trái.</p><div style="display:flex;flex-direction:column;gap:9px">${rows.map(({w,i})=>`<div><label style="display:block;font-weight:750;font-size:13px;margin-bottom:4px">${i+1}.</label><input data-fill="${i}" value="${esc(st.answers[i]||'')}" autocomplete="off" placeholder="Nhập từ..." style="width:100%;border:1px solid #cddadb;border-radius:8px;padding:9px;font:inherit;${st.checked[i]?'background:#f0f8f4;color:#6b7b7b;':''}" ${st.checked[i]?'disabled':''}><div id="fillfb${i}" class="feedback" style="font-size:12px;min-height:18px;margin-top:2px;color:${st.checked[i]?'#16804a':'#c62828'}">${st.checked[i]?'Chính xác!':st.feedback[i]||''}</div></div>`).join('')}</div><div class="pill" style="margin-top:12px;display:inline-block">Đúng ${Object.keys(st.checked).length} / ${list.length}</div><button type="button" class="btn ghost" id="checkAllFill" style="margin-top:12px;width:100%">Kiểm tra tất cả</button></section>
  </div><div class="field" style="margin-top:18px"><label>Dịch ${st.kind==='dialogue'?'hội thoại':'đoạn văn'} sang tiếng Việt</label><textarea id="fillTranslation" rows="4" placeholder="Tự dịch nội dung ở đây...">${esc(st.translated)}</textarea></div>`;
  $('fillDialogue').onclick=()=>{st.kind='dialogue';renderStudy()};$('fillPassage').onclick=()=>{st.kind='passage';renderStudy()};
